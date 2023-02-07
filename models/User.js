@@ -4,7 +4,7 @@ import Consignee from "./Consignee";
 
 const { Schema } = mongoose;
 
-const userSchema = Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -26,3 +26,5 @@ const userSchema = Schema({
 });
 
 const User = mongoose.model("User", userSchema);
+
+export { User };
