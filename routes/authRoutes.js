@@ -10,4 +10,4 @@ router.post("/login", (req, res) => {});
 router.get("/consignees", (req, res) => {});
 router.post("/consignees", (req, res) => {});
 
-export { router };
+export { router as authRoutes };
