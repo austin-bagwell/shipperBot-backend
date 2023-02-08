@@ -55,4 +55,20 @@ const logout_get = (req, res) => {
   res.redirect("/");
 };
 
-export { signup_get, signup_post, login_get, login_post, logout_get };
+const consignees_get = (req, res) => {
+  res.send("consignees get");
+};
+
+const consignees_post = (req, res) => {
+  res.send("consignees post");
+};
+
+export {
+  signup_get,
+  signup_post,
+  login_get,
+  login_post,
+  logout_get,
+  consignees_get,
+  consignees_post,
+};
