@@ -1,8 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import { authRoutes } from "./routes/authRoutes";
-const PORT = process.env.PORT || 8000;
+import { authRoutes } from "./routes/authRoutes.js";
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -28,5 +28,5 @@ app.get("/", (req, res) => {
 app.use(authRoutes);
 
 app.listen(PORT, () => {
-  console.log(`app is listeing on port ${PORT}`);
+  console.log(`app is listening on port ${PORT}`);
 });
