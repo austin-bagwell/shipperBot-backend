@@ -86,7 +86,7 @@ const logout_get = (req, res) => {
   res.redirect("/");
 };
 
-const consignees_get = (req, res) => {
+const consignees_get = async (req, res) => {
   res.send("consignees get");
 };
 
