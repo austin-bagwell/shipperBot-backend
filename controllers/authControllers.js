@@ -1,8 +1,39 @@
-import { User } from "../models/User";
+import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
 
 const SECRET = "my special secret code";
 const maxAge = 3 * 24 * 60 * 60;
+
+const handleErrors = (err) => {
+  console.log(err.message, err.code);
+  let errors = { email: "", password: "" };
+
+  // handles login error
+  // incorrect email
+  if (err.message === "Incorrect email") {
+    errors.email = "this email is not registered";
+  }
+  // handles login error
+  // incorrect password
+  if (err.message === "Incorrect password") {
+    errors.password = "password is incorrect";
+  }
+
+  if (err.code === 11000) {
+    // duplicate email
+    errors.email = "Email is already taken";
+  }
+
+  // validation errors
+  if (err.message.includes("user validation failed")) {
+    Object.values(err.errors).forEach(({ properties }) => {
+      errors[properties.path] = properties.message;
+      // console.log(errors);
+    });
+  }
+
+  return errors;
+};
 
 const createToken = (id) => {
   jwt.sign({ id }, SECRET, {

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
-import Consignee from "./Consignee";
 
 const { Schema } = mongoose;
 
