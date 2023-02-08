@@ -25,6 +25,9 @@ app.get("/", (req, res) => {
   res.send("how do I link this to a React app? TBD");
 });
 
+// added to surpress deprecation warning idk what it does
+mongoose.set("strictQuery", true);
+
 app.use(authRoutes);
 
 // app.listen(PORT, () => {

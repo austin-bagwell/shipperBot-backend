@@ -6,12 +6,12 @@ const maxAge = 3 * 24 * 60 * 60;
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
-  let errors = { email: "", password: "" };
+  let errors = { username: "", password: "" };
 
   // handles login error
-  // incorrect email
-  if (err.message === "Incorrect email") {
-    errors.email = "this email is not registered";
+  // incorrect username
+  if (err.message === "Incorrect username") {
+    errors.username = "this username is not registered";
   }
   // handles login error
   // incorrect password
@@ -20,8 +20,8 @@ const handleErrors = (err) => {
   }
 
   if (err.code === 11000) {
-    // duplicate email
-    errors.email = "Email is already taken";
+    // duplicate username
+    errors.username = "username is already taken";
   }
 
   // validation errors
@@ -50,10 +50,10 @@ const login_get = (req, res) => {
 };
 
 const signup_post = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.create({ email, password });
+    const user = await User.create({ username, password });
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(201).json({ user: user._id });
@@ -64,10 +64,10 @@ const signup_post = async (req, res) => {
 };
 
 const login_post = async (req, res) => {
-  const { email, password } = req.body;
+  const { username, password } = req.body;
 
   try {
-    const user = await User.login(email, password);
+    const user = await User.login(username, password);
     const token = createToken(user._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({ user: user._id });
