@@ -97,28 +97,20 @@ const consignees_get = async (req, res) => {
 };
 
 // this works!!!!!!!!
+// FIXME
+// need way to check user on all HTTP requests (think this middleware is in the node-auth project already)
+// should 100% extract the query logic out of this route and call it as a function
 const consignees_post = async (req, res) => {
   const { name, transitTime } = req.body;
-  const testUser = await User.updateOne(
+  const addConsigneeToUser = await User.updateOne(
     {
       _id: `63e65171a1d971a24ac51cff`,
     },
     { $push: { consignees: { name, transitTime } } }
   );
 
-  console.log(testUser);
-  res.send(`consignees_post request... worked? ${testUser}`);
-  //   const { testField } = req.body;
-  //   db.students.updateOne(
-  //     { _id: 1 },
-  //     { $push: { scores: 89 } }
-  //  )
-
-  //   const consignee = { id: "0", name: "test_consignee_0", transitTime: "420" };
-  //   testUser.updateOne(
-  //     { _id: `63e2f817256b8a24a47aa165` },
-  //     { $push: { consignees: "test" } }
-  //   );
+  console.log(addConsigneeToUser);
+  res.send(`consignees_post request... worked? ${addConsigneeToUser}`);
 };
 
 export {
