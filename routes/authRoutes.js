@@ -3,6 +3,7 @@ import * as authControllers from "../controllers/authControllers.js";
 
 const router = new Router();
 
+// FIXME get and post signup and get login don't need to be authRoutes I think
 // callback will be definedin authControllers.js
 router.get("/signup", authControllers.signup_get);
 router.post("/signup", authControllers.signup_post);

@@ -1,5 +1,6 @@
 import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 const SECRET = "my special secret code";
 const maxAge = 3 * 24 * 60 * 60;
@@ -87,11 +88,37 @@ const logout_get = (req, res) => {
 };
 
 const consignees_get = async (req, res) => {
-  res.send("consignees get");
+  const testUser = await User.findOne({
+    _id: `63e65171a1d971a24ac51cff`,
+  }).exec();
+
+  console.log(testUser);
+  res.send(`consignee_get testUser: ${testUser}`);
 };
 
-const consignees_post = (req, res) => {
-  res.send("consignees post");
+// this works!!!!!!!!
+const consignees_post = async (req, res) => {
+  const { name, transitTime } = req.body;
+  const testUser = await User.updateOne(
+    {
+      _id: `63e65171a1d971a24ac51cff`,
+    },
+    { $push: { consignees: { name, transitTime } } }
+  );
+
+  console.log(testUser);
+  res.send(`consignees_post request... worked? ${testUser}`);
+  //   const { testField } = req.body;
+  //   db.students.updateOne(
+  //     { _id: 1 },
+  //     { $push: { scores: 89 } }
+  //  )
+
+  //   const consignee = { id: "0", name: "test_consignee_0", transitTime: "420" };
+  //   testUser.updateOne(
+  //     { _id: `63e2f817256b8a24a47aa165` },
+  //     { $push: { consignees: "test" } }
+  //   );
 };
 
 export {

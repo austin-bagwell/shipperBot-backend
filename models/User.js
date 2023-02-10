@@ -15,7 +15,7 @@ const userSchema = new Schema({
     required: [true, "Please enter your password"],
     minlength: [6, "Password must be at least 6 characters"],
   },
-  consignees: [{ id: String, name: String, transitTime: String }],
+  consignees: [{ name: String, transitTime: String }],
 });
 
 // TODO CRUD ops for consignees as static methods on this class/model
@@ -50,6 +50,7 @@ userSchema.statics.login = async function (username, password) {
 
     if (auth) {
       return user;
+      3;
     }
     throw Error("Incorrect password");
   }
@@ -57,6 +58,18 @@ userSchema.statics.login = async function (username, password) {
   throw Error("Incorrect username");
 };
 
+// userSchema.statics.addNewConsignees = async function (consignee) {
+//   // might be possible for mongo to generate an ID for me
+//   // const { id, name, transitTime } = consignee;
+// };
+
 const User = mongoose.model("User", userSchema);
+
+// this isn't gonna work but findByIdAndUpdate might be the right track
+// User.addNewConsignee = async function (consig) {
+//   const id = this._id;
+//   const { name, transitTime } = consignee;
+//   User.findByIdAndUpdate(id, { conignee: consignee });
+// };
 
 export { User };
