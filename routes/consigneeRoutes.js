@@ -1,6 +1,6 @@
 import { Router } from "express";
 import * as consigneeControllers from "../controllers/consigneeControllers.js";
-import { checkUser } from "../middleware/authMiddleware";
+import { checkUser } from "../middleware/authMiddleware.js";
 
 const router = new Router();
 

@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { authRoutes } from "./routes/authRoutes.js";
+import { consigneeRoutes } from "./routes/consigneeRoutes.js";
 import { USER, DBPASSWORD } from "./env/db.js";
 import { checkUser, requireAuth } from "./middleware/authMiddleware.js";
 const PORT = process.env.PORT || 3000;
@@ -31,3 +32,4 @@ app.get("/", (req, res) => {
 });
 app.get("*", checkUser);
 app.use(authRoutes);
+app.use(consigneeRoutes);
