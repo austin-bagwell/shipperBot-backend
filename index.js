@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { authRoutes } from "./routes/authRoutes.js";
 import { USER, DBPASSWORD } from "./env/db.js";
+import { checkUser, requireAuth } from "./middleware/authMiddleware.js";
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -22,13 +23,13 @@ mongoose
   .then((result) => app.listen(3000))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  res.send("how do I link this to a React app? TBD");
-});
-
 // added to surpress deprecation warning idk what it does
 mongoose.set("strictQuery", true);
 
+app.get("/", (req, res) => {
+  res.send("how do I link this to a React app? TBD");
+});
+app.get("*", checkUser);
 app.use(authRoutes);
 
 // app.listen(PORT, () => {

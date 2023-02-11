@@ -1,8 +1,8 @@
 import { User } from "../models/User.js";
+import { SECRET } from "../env/jwtSecret.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-const SECRET = "my special secret code";
 const maxAge = 3 * 24 * 60 * 60;
 
 const handleErrors = (err) => {
