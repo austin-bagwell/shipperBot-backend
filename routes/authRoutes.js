@@ -9,6 +9,7 @@ router.get("/signup", authControllers.signup_get);
 router.post("/signup", authControllers.signup_post);
 router.get("/login", authControllers.login_get);
 router.post("/login", authControllers.login_post);
+// FIXME these need to move to their own module
 router.get("/consignees", authControllers.consignees_get);
 router.post("/consignees", authControllers.consignees_post);
 
