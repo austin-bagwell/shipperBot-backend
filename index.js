@@ -20,7 +20,7 @@ mongoose
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then((result) => app.listen(3000))
+  .then((result) => app.listen(PORT))
   .catch((err) => console.log(err));
 
 // added to surpress deprecation warning idk what it does
@@ -31,7 +31,3 @@ app.get("/", (req, res) => {
 });
 app.get("*", checkUser);
 app.use(authRoutes);
-
-// app.listen(PORT, () => {
-//   console.log(`app is listening on port ${PORT}`);
-// });
