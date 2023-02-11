@@ -1,5 +1,5 @@
-import { jwt } from "jsonwebtoken";
-import { User } from "../models/User";
+import jwt from "jsonwebtoken";
+import { User } from "../models/User.js";
 import { SECRET } from "../env/jwtSecret.js";
 
 const requireAuth = (req, res, next) => {
