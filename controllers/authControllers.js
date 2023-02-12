@@ -6,23 +6,17 @@ const handleErrors = (err) => {
   console.log(err.message, err.code);
   let errors = { username: "", password: "" };
 
-  // handles login error
-  // incorrect username
   if (err.message === "Incorrect username") {
     errors.username = "this username is not registered";
   }
-  // handles login error
-  // incorrect password
   if (err.message === "Incorrect password") {
     errors.password = "password is incorrect";
   }
 
   if (err.code === 11000) {
-    // duplicate username
     errors.username = "username is already taken";
   }
 
-  // validation errors
   if (err.message.includes("user validation failed")) {
     Object.values(err.errors).forEach(({ properties }) => {
       errors[properties.path] = properties.message;
@@ -54,8 +48,6 @@ const signup_post = async (req, res) => {
   try {
     const user = await User.create({ username, password });
     const token = createToken(user._id);
-    console.log(`user._id from signup_post: `, user._id);
-    console.log(`token from signup_post: `, token);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(201).json({ user: user._id });
   } catch (err) {
@@ -79,8 +71,6 @@ const login_post = async (req, res) => {
 };
 
 const logout_get = (req, res) => {
-  // technically can't delete jwt cookie but
-  // can replace w/ blank cookie w/ short expiry date
   res.cookie("jwt", "", {
     maxAge: 1,
   });

@@ -1,31 +1,35 @@
 import { User } from "../models/User.js";
-import { checkUser } from "../middleware/authMiddleware.js";
 import { SECRET } from "../env/jwtSecret.js";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
-// FIXME
-// need way to access user on all HTTP requests to consignee routes
-// checkUser middleware is being applied in consigneeRoutes
-// but I need access to that userID on all of these requests
-// do I send that on the req,
-// or is there a way to access that via app.locals.user somehow?
+// TODO
+// add routes to CRUD one or multiple consignees, select individual consignees,
+// basically, figure out what all options will be available for consignees
+// extract all mongoDB queries into discrete functions?
+// how to get userId in a better way, more DRY way?
 
-// FIXME will need get one, get all options
+// FIXME
+// this is currently only return the full User document
+// Need it to return the consignees that belong to that user
 const consignees_get = async (req, res) => {
+  const token = req.cookies.jwt;
+  const userId = jwt.verify(token, SECRET).id;
+
   const user = await User.findOne({
-    _id: `63e65171a1d971a24ac51cff`,
+    _id: userId,
   }).exec();
 
-  res.send(`consignee_get user: ${user}`);
+  res.send(`consignee_get logged in user: ${user}`);
 };
-// TODO
-// should 100% extract the query logic out of this route and call it as a function
+
+// TODO rename this - currently this pushes one new consignee to the user's consignee array
 const consignees_post = async (req, res) => {
   const { name, transitTime } = req.body;
+  const userId = parseJwt(req.cookies.jwt).id;
   const addConsigneeToUser = await User.updateOne(
     {
-      _id: `63e65171a1d971a24ac51cff`,
+      _id: userId,
     },
     { $push: { consignees: { name, transitTime } } }
   );
