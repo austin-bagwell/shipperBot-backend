@@ -11,12 +11,13 @@ import mongoose from "mongoose";
 // do I send that on the req,
 // or is there a way to access that via app.locals.user somehow?
 
+// FIXME will need get one, get all options
 const consignees_get = async (req, res) => {
-  const testUser = await User.findOne({
+  const user = await User.findOne({
     _id: `63e65171a1d971a24ac51cff`,
   }).exec();
 
-  res.send(`consignee_get testUser: ${testUser}`);
+  res.send(`consignee_get user: ${user}`);
 };
 // TODO
 // should 100% extract the query logic out of this route and call it as a function

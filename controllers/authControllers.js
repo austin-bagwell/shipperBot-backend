@@ -2,8 +2,6 @@ import { User } from "../models/User.js";
 import { SECRET } from "../env/jwtSecret.js";
 import jwt from "jsonwebtoken";
 
-const maxAge = 3 * 24 * 60 * 60;
-
 const handleErrors = (err) => {
   console.log(err.message, err.code);
   let errors = { username: "", password: "" };
@@ -35,8 +33,9 @@ const handleErrors = (err) => {
   return errors;
 };
 
+const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  jwt.sign({ id }, SECRET, {
+  return jwt.sign({ id }, SECRET, {
     expiresIn: maxAge,
   });
 };
@@ -55,6 +54,8 @@ const signup_post = async (req, res) => {
   try {
     const user = await User.create({ username, password });
     const token = createToken(user._id);
+    console.log(`user._id from signup_post: `, user._id);
+    console.log(`token from signup_post: `, token);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(201).json({ user: user._id });
   } catch (err) {

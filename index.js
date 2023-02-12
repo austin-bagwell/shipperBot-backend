@@ -12,8 +12,6 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// TODO might be different with es6 instead of commonJS?
-// const { connect } = mongoose;
 const dbURI = `mongodb+srv://${USER}:${DBPASSWORD}@cluster0.cdcnuye.mongodb.net/shipperBot`;
 
 mongoose

@@ -1,11 +1,21 @@
 import { Router } from "express";
 import * as consigneeControllers from "../controllers/consigneeControllers.js";
-import { checkUser } from "../middleware/authMiddleware.js";
+import { checkUser, requireAuth } from "../middleware/authMiddleware.js";
 
 const router = new Router();
 
-router.get("/consignees", checkUser, consigneeControllers.consignees_get);
-router.post("/consignees", checkUser, consigneeControllers.consignees_post);
+router.get(
+  "/consignees",
+  requireAuth,
+  checkUser,
+  consigneeControllers.consignees_get
+);
+router.post(
+  "/consignees",
+  requireAuth,
+  checkUser,
+  consigneeControllers.consignees_post
+);
 
 // TODO should these actually live under User routes?
 // I need to do this to work with any consignees:
