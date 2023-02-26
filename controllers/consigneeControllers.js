@@ -10,7 +10,7 @@ import mongoose from "mongoose";
 // how to get userId in a better way, more DRY way?
 
 // return all consignees belonging to a user
-const consignees_get = async (req, res) => {
+const consignees_get_all = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
 
@@ -37,4 +37,4 @@ const consignees_post = async (req, res) => {
   res.send(`consignees_post request... worked? ${addConsigneeToUser}`);
 };
 
-export { consignees_get, consignees_post };
+export { consignees_get_all, consignees_post };

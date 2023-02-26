@@ -8,7 +8,7 @@ router.get(
   "/consignees",
   requireAuth,
   checkUser,
-  consigneeControllers.consignees_get
+  consigneeControllers.consignees_get_all
 );
 router.post(
   "/consignees",
