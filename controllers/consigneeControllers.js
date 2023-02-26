@@ -25,7 +25,8 @@ const consignees_get = async (req, res) => {
 // TODO rename this - currently this pushes one new consignee to the user's consignee array
 const consignees_post = async (req, res) => {
   const { name, transitTime } = req.body;
-  const userId = parseJwt(req.cookies.jwt).id;
+  const token = req.cookies.jwt;
+  const userId = jwt.verify(token, SECRET).id;
   const addConsigneeToUser = await User.updateOne(
     {
       _id: userId,

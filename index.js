@@ -31,5 +31,3 @@ app.get("/", (req, res) => {
 app.get("*", checkUser);
 app.use(authRoutes);
 app.use(consigneeRoutes);
-
-console.log('got a new macbook, this is a test!');
