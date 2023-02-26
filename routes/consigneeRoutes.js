@@ -10,6 +10,14 @@ router.get(
   checkUser,
   consigneeControllers.consignees_get_all
 );
+
+router.get(
+  "/consignees/:name",
+  requireAuth,
+  checkUser,
+  consigneeControllers.consignees_get_one
+);
+
 router.post(
   "/consignees",
   requireAuth,
