@@ -26,10 +26,8 @@ const consignees_get_all = async (req, res) => {
 // spend ~60 min on it
 // as written, URL /consignees/<name of consignee> give me access to <name of consignee>
 // TODO
-// send the name (or ID?) of consigne in req body
-// pull all consigs from User
-// check to see if array contains the req.consignee
-// if yes, return that single consignee object
+// refactor using URL query params? /consignees/?name=<name>
+// that feels much more extensible than what I currently have
 
 // this works, but is pretty damn ugly
 const consignees_get_one = async (req, res) => {
@@ -43,20 +41,10 @@ const consignees_get_one = async (req, res) => {
   }).exec();
 
   const consignees = user.consignees;
-  let consigneeRes;
-  for (const consignee of consignees) {
-    if (consignee.name === name) {
-      consigneeRes = consignee.name;
-      const transitTime = consignee.transitTime;
-      console.log(`newly set consigneeRes: ${consigneeRes}`);
-      res.send(
-        `here's the consignee I found: ${consigneeRes} Transit time is: ${transitTime}`
-      );
-      break;
-    } else {
-      console.log(`Didn't find a consignee named ${name}`);
-    }
-  }
+
+  const filtered = consignees.filter((consig) => consig.name === name);
+  console.log(filtered);
+  res.json(filtered);
 };
 
 // TODO rename this - currently this pushes one new consignee to the user's consignee array
