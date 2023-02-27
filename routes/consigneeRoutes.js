@@ -22,7 +22,7 @@ router.post(
   "/consignees",
   requireAuth,
   checkUser,
-  consigneeControllers.consignees_post
+  consigneeControllers.consignees_add_one
 );
 
 // TODO should these actually live under User routes?

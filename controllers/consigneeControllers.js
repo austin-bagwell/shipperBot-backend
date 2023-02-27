@@ -48,7 +48,7 @@ const consignees_get_one = async (req, res) => {
 };
 
 // TODO rename this - currently this pushes one new consignee to the user's consignee array
-const consignees_post = async (req, res) => {
+const consignees_add_one = async (req, res) => {
   const { name, transitTime } = req.body;
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
@@ -59,7 +59,26 @@ const consignees_post = async (req, res) => {
     { $push: { consignees: { name, transitTime } } }
   );
 
-  res.send(`consignees_post request... worked? ${addConsigneeToUser}`);
+  res.send(`consignees_add_one request... worked? ${addConsigneeToUser}`);
 };
 
-export { consignees_get_one, consignees_get_all, consignees_post };
+const consignees_update_one = async (req, res) => {
+  const { name, transitTime } = req.body;
+  const token = req.cookies.jwt;
+  const userId = jwt.verify(token, SECRET).id;
+
+  const user = await User.findOne({
+    _id: userId,
+  }).exec();
+
+  const consignees = user.consignees;
+  // TODO
+  // how to update just one (preferably the correct one) consignee from User.consignees?
+};
+
+export {
+  consignees_get_one,
+  consignees_get_all,
+  consignees_add_one,
+  consignees_update_one,
+};
