@@ -62,16 +62,26 @@ const consignees_add_one = async (req, res) => {
   res.send(`consignees_add_one request... worked? ${addConsigneeToUser}`);
 };
 
+// bad bad bad
 const consignees_update_one = async (req, res) => {
-  const { name, transitTime } = req.body;
-  const token = req.cookies.jwt;
+  // const name = req.params.name;
+  const { testPUT } = req.body;
+  // const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
 
   const user = await User.findOne({
     _id: userId,
   }).exec();
 
-  const consignees = user.consignees;
+  // const consignees = user.consignees;
+  // let consigIndx;
+  // const filtered = consignees.filter((consig, i) => {
+  //   consig.name === name;
+  //   consigIndx = i;
+  // });
+
+  // console.log(consignees);
+  res.send(`you hit the consignees PUT route. Here is your req param ${name}`);
   // TODO
   // how to update just one (preferably the correct one) consignee from User.consignees?
 };

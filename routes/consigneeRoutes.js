@@ -25,6 +25,13 @@ router.post(
   consigneeControllers.consignees_add_one
 );
 
+router.put(
+  "/consignees",
+  requireAuth,
+  checkUser,
+  consigneeControllers.consignees_update_one
+);
+
 // TODO should these actually live under User routes?
 // I need to do this to work with any consignees:
 // /users/:userId/consignees/:consigneeId
