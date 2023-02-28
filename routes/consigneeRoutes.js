@@ -26,7 +26,7 @@ router.post(
 );
 
 router.put(
-  "/consignees",
+  "/consignees/:id",
   requireAuth,
   checkUser,
   consigneeControllers.consignees_update_one

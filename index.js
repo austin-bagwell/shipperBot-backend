@@ -1,6 +1,9 @@
 import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+import * as dotenv from "dotenv";
+dotenv.config();
+console.log(process.env);
 import { authRoutes } from "./routes/authRoutes.js";
 import { consigneeRoutes } from "./routes/consigneeRoutes.js";
 import { USER, DBPASSWORD } from "./env/db.js";
@@ -28,6 +31,7 @@ mongoose.set("strictQuery", true);
 app.get("/", (req, res) => {
   res.send("how do I link this to a React app? TBD");
 });
+
 app.get("*", checkUser);
 app.use(authRoutes);
 app.use(consigneeRoutes);
