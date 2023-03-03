@@ -25,12 +25,20 @@ router.post(
   consigneeControllers.consignees_add_one
 );
 
-router.put(
+router.patch(
   "/consignees/:id",
   requireAuth,
   checkUser,
   consigneeControllers.consignees_update_one
 );
+
+// delete all consignees
+router.delete(
+  "/consignees",
+  requireAuth,
+  checkUser,
+  consigneeControllers.consignees_delete_all
+)
 
 // TODO should these actually live under User routes?
 // I need to do this to work with any consignees:
