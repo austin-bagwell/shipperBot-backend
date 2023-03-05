@@ -31,24 +31,25 @@ const consignees_get_all = async (req, res) => {
  * @param {name: String} req = name of the consignee you want to return
  * @param {<Consignee> = {}} res { name, transitTime } (not using TS, so it isn't *actually* a type)
  */
-// this works, but is pretty damn ugly
 const consignees_get_one = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
+  const name = req.params.name;
 
-  const name = req.params.consigneeName;
-  const user = await User.findOne({
-    _id: userId,
-  }).exec();
+  try {
+    const user = await User.findOne({
+      _id: userId,
+    }).exec();
 
-  const consignees = user.consignees;
+    const consignees = user.consignees;
 
-  const filtered = consignees.filter((consig) => consig.name === name);
-  console.log(filtered);
-  res.json(filtered);
+    const filtered = consignees.filter((consig) => consig.name === name);
+    res.json(filtered);
+  } catch (err) {
+    res.status(400).send(`err: `, err);
+  }
 };
 
-// TODO rename this - currently this pushes one new consignee to the user's consignee array
 const consignees_add_one = async (req, res) => {
   const { name, transitTime } = req.body;
   const token = req.cookies.jwt;
