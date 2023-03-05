@@ -31,6 +31,8 @@ const consignees_get_all = async (req, res) => {
  * @param {name: String} req = name of the consignee you want to return
  * @param {<Consignee> = {}} res { name, transitTime } (not using TS, so it isn't *actually* a type)
  */
+
+// TODO work on error handling
 const consignees_get_one = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
@@ -43,10 +45,15 @@ const consignees_get_one = async (req, res) => {
 
     const consignees = user.consignees;
 
-    const filtered = consignees.filter((consig) => consig.name === name);
-    res.json(filtered);
+    const consignee = consignees.filter((consig) => consig.name === name);
+    if (consignee.length > 0) {
+      res.json(consignee);
+    } else {
+      throw new Error(`didn't find that consignee`);
+    }
   } catch (err) {
-    res.status(400).send(`err: `, err);
+    console.log(err);
+    res.status(400).json(err);
   }
 };
 
