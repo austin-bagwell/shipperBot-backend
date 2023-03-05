@@ -63,24 +63,27 @@ const consignees_add_one = async (req, res) => {
   res.send(`consignees_add_one request... worked? ${addConsigneeToUser}`);
 };
 
-// TODO h
-// how to use URL query?
+// TODO
+// only updates transitTime
 const consignees_update_one = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
   // const consigName = req.query.name;
   // const transitTime = req.query.transitTime;
   const consigName = "kroger";
-  const transitTime = "666";
+  const updatedName = "kroger";
+  const transitTime = "333";
 
-  const user = { _id: userId, "consignees.name": consigName };
-  // TODO
-  // how does this work in practice?
+  const query = { _id: userId, "consignees.name": consigName };
+
   const updateOneConsignee = {
-    $set: { "consignees.$.transitTime": transitTime },
+    $set: {
+      "consignees.$.name": updatedName,
+      "consignees.$.transitTime": transitTime,
+    },
   };
 
-  const result = await User.updateOne(user, updateOneConsignee).exec();
+  const result = await User.updateOne(query, updateOneConsignee).exec();
   res.json(result);
 };
 
