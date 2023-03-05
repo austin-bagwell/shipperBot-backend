@@ -64,27 +64,31 @@ const consignees_add_one = async (req, res) => {
 };
 
 // TODO
-// only updates transitTime
+// unsure if using the mix of params to find consig and req.body to update is good idea
 const consignees_update_one = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
-  // const consigName = req.query.name;
-  // const transitTime = req.query.transitTime;
-  const consigName = "kroger";
-  const updatedName = "kroger";
-  const transitTime = "333";
 
-  const query = { _id: userId, "consignees.name": consigName };
+  try {
+    const consigName = req.params.name;
 
-  const updateOneConsignee = {
-    $set: {
-      "consignees.$.name": updatedName,
-      "consignees.$.transitTime": transitTime,
-    },
-  };
+    const updatedName = req.body.name;
+    const transitTime = req.body.transitTime;
 
-  const result = await User.updateOne(query, updateOneConsignee).exec();
-  res.json(result);
+    const query = { _id: userId, "consignees.name": consigName };
+
+    const updateOneConsignee = {
+      $set: {
+        "consignees.$.name": updatedName,
+        "consignees.$.transitTime": transitTime,
+      },
+    };
+
+    const result = await User.updateOne(query, updateOneConsignee).exec();
+    res.json(result);
+  } catch (err) {
+    res.status(400).send(err);
+  }
 };
 
 const consignees_delete_all = async (req, res) => {
