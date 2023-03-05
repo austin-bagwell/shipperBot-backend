@@ -22,13 +22,6 @@ const consignees_get_all = async (req, res) => {
   res.send(`consignee_get logged in user consignees: ${consignees}`);
 };
 
-// 5pm 2/26 working on getting this functional in some capacity
-// spend ~60 min on it
-// as written, URL /consignees/<name of consignee> give me access to <name of consignee>
-// TODO
-// refactor using URL query params? /consignees/?name=<name>
-// that feels much more extensible than what I currently have
-
 /**
  *
  * @param {name: String} req = name of the consignee you want to return
@@ -67,19 +60,6 @@ const consignees_add_one = async (req, res) => {
   res.send(`consignees_add_one request... worked? ${addConsigneeToUser}`);
 };
 
-// FIXME
-// likely won't work as planned
-// need to check how to actually update the
-// consignees[] on a user - save()? or updateOne() will be fine?
-const consignees_delete_all = async (req, res) => {
-  const token = req.cookies.jwt;
-  const userId = jwt.verify(token, SECRET).id;
-
-  const user = await User.findOne({
-    _id: userId,
-  }).exec();
-};
-
 const consignees_update_one = async (req, res) => {
   const query = { name: name };
   const updates = { $push: consignees };
@@ -101,6 +81,20 @@ const consignees_update_one = async (req, res) => {
 
   res.json(consignees);
 };
+
+const consignees_delete_all = async (req, res) => {
+  const token = req.cookies.jwt;
+  const userId = jwt.verify(token, SECRET).id;
+
+  const user = { _id: userId };
+  const removeAllConsignees = {
+    $set: { consignees: [] },
+  };
+
+  const result = await User.updateOne(user, removeAllConsignees).exec();
+  res.json(result);
+};
+
 /*
 pulled from the mongoDB tutorial, can adapt here?
 

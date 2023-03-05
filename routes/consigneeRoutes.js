@@ -12,7 +12,7 @@ router.get(
 );
 
 router.get(
-  "/consignees/:name",
+  "/consignees/:consignee",
   requireAuth,
   checkUser,
   consigneeControllers.consignees_get_one
@@ -38,7 +38,7 @@ router.delete(
   requireAuth,
   checkUser,
   consigneeControllers.consignees_delete_all
-)
+);
 
 // TODO should these actually live under User routes?
 // I need to do this to work with any consignees:
