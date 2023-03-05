@@ -4,13 +4,13 @@ import jwt from "jsonwebtoken";
 // import mongoose from "mongoose";
 
 // TODO
-// add routes to CRUD one or multiple consignees, select individual consignees,
-// basically, figure out what all options will be available for consignees
-// extract all mongoDB queries into discrete functions?
-// how to get userId in a better way, more DRY way?
+// rename all these methods... why did I use snake case?
+// answer: b/c that is what net ninja did
+// anyway use camelCase like a good JS bro
+// add delete_one
 
 // return all consignees belonging to a user
-const consignees_get_all = async (req, res) => {
+const getAll = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
 
@@ -140,7 +140,7 @@ router.delete("/:id", async (req, res) => {
 */
 export {
   consignees_get_one,
-  consignees_get_all,
+  getAll,
   consignees_add_one,
   consignees_update_one,
   consignees_delete_all,

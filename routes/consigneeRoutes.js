@@ -4,12 +4,7 @@ import { checkUser, requireAuth } from "../middleware/authMiddleware.js";
 
 const router = new Router();
 
-router.get(
-  "/consignees",
-  requireAuth,
-  checkUser,
-  consigneeControllers.consignees_get_all
-);
+router.get("/consignees", requireAuth, checkUser, consigneeControllers.getAll);
 
 // FIXME
 // pretty sure this should turn into a URL query
