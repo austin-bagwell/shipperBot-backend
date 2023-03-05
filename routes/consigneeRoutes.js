@@ -11,8 +11,12 @@ router.get(
   consigneeControllers.consignees_get_all
 );
 
+// FIXME
+// pretty sure this should turn into a URL query
+// so that I can eventually add handling to update multiple
+// consignees at once
 router.get(
-  "/consignees/:consignee",
+  "/consignees/:consigneeName",
   requireAuth,
   checkUser,
   consigneeControllers.consignees_get_one
@@ -25,14 +29,18 @@ router.post(
   consigneeControllers.consignees_add_one
 );
 
+// TODO
+// works, but I think the implementation is bad
+// should probably be using URL queries
+// consignees/?name=<name>,transitTime=<transitTime>
+// not /:name
 router.patch(
-  "/consignees/:id",
+  "/consignees/:name",
   requireAuth,
   checkUser,
   consigneeControllers.consignees_update_one
 );
 
-// delete all consignees
 router.delete(
   "/consignees",
   requireAuth,

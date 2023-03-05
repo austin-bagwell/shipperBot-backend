@@ -19,7 +19,11 @@ const consignees_get_all = async (req, res) => {
   }).exec();
 
   const consignees = user.consignees;
-  res.send(`consignee_get logged in user consignees: ${consignees}`);
+  if (consignees.length < 1) {
+    res.send(`You don't have any consignees saved yet`);
+  } else {
+    res.json(consignees);
+  }
 };
 
 /**
@@ -32,8 +36,7 @@ const consignees_get_one = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
 
-  const name = req.params.name;
-  console.log(`request parameters name: `, name);
+  const name = req.params.consigneeName;
   const user = await User.findOne({
     _id: userId,
   }).exec();
@@ -60,26 +63,25 @@ const consignees_add_one = async (req, res) => {
   res.send(`consignees_add_one request... worked? ${addConsigneeToUser}`);
 };
 
+// TODO h
+// how to use URL query?
 const consignees_update_one = async (req, res) => {
-  const query = { name: name };
-  const updates = { $push: consignees };
-  const user = await User.findOne({
-    _id: userId,
-  }).exec();
+  const token = req.cookies.jwt;
+  const userId = jwt.verify(token, SECRET).id;
+  // const consigName = req.query.name;
+  // const transitTime = req.query.transitTime;
+  const consigName = "kroger";
+  const transitTime = "666";
 
-  const consignees = user.consignees;
-  const { name, transitTime } = req.params.consignee;
+  const user = { _id: userId, "consignees.name": consigName };
+  // TODO
+  // how does this work in practice?
+  const updateOneConsignee = {
+    $set: { "consignees.$.transitTime": transitTime },
+  };
 
-  // FIXME
-  // how to get index of an object in array using obj property?
-  const consigeeToUpdate = consignees.indexOf(name);
-  const consignee = consignees[consigeeToUpdate];
-  consigee.assign({ name, transitTime });
-
-  consignees.splice(consigeeToUpdate, 1, consignee);
-  const updateConsignee = await User.updateOne(query, consignees);
-
-  res.json(consignees);
+  const result = await User.updateOne(user, updateOneConsignee).exec();
+  res.json(result);
 };
 
 const consignees_delete_all = async (req, res) => {
