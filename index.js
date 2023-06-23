@@ -1,13 +1,16 @@
 import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
+
 import * as dotenv from "dotenv";
 dotenv.config();
+const USER = process.env.USER;
+const DBPASSWORD = process.env.DBPASSWORD;
+const PORT = process.env.PORT || 3000;
+
 import { authRoutes } from "./routes/authRoutes.js";
 import { consigneeRoutes } from "./routes/consigneeRoutes.js";
-import { USER, DBPASSWORD } from "./env/db.js";
 import { checkUser } from "./middleware/authMiddleware.js";
-const PORT = process.env.PORT || 3000;
 
 const app = express();
 
