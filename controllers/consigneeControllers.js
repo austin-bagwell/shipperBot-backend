@@ -1,6 +1,7 @@
 import { User } from "../models/User.js";
-import { SECRET } from "../env/jwtSecret.js";
 import jwt from "jsonwebtoken";
+
+const SECRET = process.env.SECRET;
 // import mongoose from "mongoose";
 
 // TODO

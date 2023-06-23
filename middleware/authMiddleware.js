@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
-import { SECRET } from "../env/jwtSecret.js";
+
+const SECRET = process.env.SECRET;
 
 const requireAuth = (req, res, next) => {
   // first, get token from cookies
