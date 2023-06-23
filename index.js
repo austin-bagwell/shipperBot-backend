@@ -27,8 +27,8 @@ mongoose
   .then(() => app.listen(PORT))
   .catch((err) => console.log(err));
 
-// added to surpress deprecation warning idk what it does
-mongoose.set("strictQuery", true);
+// // added to surpress deprecation warning idk what it does
+mongoose.set("strictQuery", false);
 
 app.get("/", (req, res) => {
   res.send("how do I link this to a React app? TBD");
