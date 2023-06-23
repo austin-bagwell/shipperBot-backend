@@ -14,28 +14,23 @@ router.get(
   "/consignees/:name",
   requireAuth,
   checkUser,
-  consigneeControllers.consignees_get_one
+  consigneeControllers.getOne
 );
 
-router.post(
-  "/consignees",
-  requireAuth,
-  checkUser,
-  consigneeControllers.consignees_add_one
-);
+router.post("/consignees", requireAuth, checkUser, consigneeControllers.getOne);
 
 router.patch(
   "/consignees/:name",
   requireAuth,
   checkUser,
-  consigneeControllers.consignees_update_one
+  consigneeControllers.updateOne
 );
 
 router.delete(
   "/consignees",
   requireAuth,
   checkUser,
-  consigneeControllers.consignees_delete_all
+  consigneeControllers.deleteAll
 );
 
 export { router as consigneeRoutes };

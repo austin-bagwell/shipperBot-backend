@@ -33,7 +33,7 @@ const getAll = async (req, res) => {
  */
 
 // TODO work on error handling
-const consignees_get_one = async (req, res) => {
+const getOne = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
   const name = req.params.name;
@@ -57,7 +57,7 @@ const consignees_get_one = async (req, res) => {
   }
 };
 
-const consignees_add_one = async (req, res) => {
+const addOne = async (req, res) => {
   const { name, transitTime } = req.body;
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
@@ -68,12 +68,12 @@ const consignees_add_one = async (req, res) => {
     { $push: { consignees: { name, transitTime } } }
   );
 
-  res.send(`consignees_add_one request... worked? ${addConsigneeToUser}`);
+  res.send(`addOne request... worked? ${addConsigneeToUser}`);
 };
 
 // TODO
 // unsure if using the mix of params to find consig and req.body to update is good idea
-const consignees_update_one = async (req, res) => {
+const updateOne = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
 
@@ -99,7 +99,7 @@ const consignees_update_one = async (req, res) => {
   }
 };
 
-const consignees_delete_all = async (req, res) => {
+const deleteAll = async (req, res) => {
   const token = req.cookies.jwt;
   const userId = jwt.verify(token, SECRET).id;
 
@@ -138,10 +138,4 @@ router.delete("/:id", async (req, res) => {
   res.send(result).status(200);
 });
 */
-export {
-  consignees_get_one,
-  getAll,
-  consignees_add_one,
-  consignees_update_one,
-  consignees_delete_all,
-};
+export { getOne, getAll, addOne, updateOne, deleteAll };
