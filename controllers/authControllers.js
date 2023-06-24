@@ -35,15 +35,15 @@ const createToken = (id) => {
   });
 };
 
-const signup_get = (req, res) => {
+const getSignup = (req, res) => {
   res.send("signup get request");
 };
 
-const login_get = (req, res) => {
+const getLogin = (req, res) => {
   res.send("login get request");
 };
 
-const signup_post = async (req, res) => {
+const postSignup = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -57,7 +57,7 @@ const signup_post = async (req, res) => {
   }
 };
 
-const login_post = async (req, res) => {
+const postLogin = async (req, res) => {
   const { username, password } = req.body;
 
   try {
@@ -71,11 +71,11 @@ const login_post = async (req, res) => {
   }
 };
 
-const logout_get = (req, res) => {
+const getLogout = (req, res) => {
   res.cookie("jwt", "", {
     maxAge: 1,
   });
   res.redirect("/");
 };
 
-export { signup_get, signup_post, login_get, login_post, logout_get };
+export { getSignup, postSignup, getLogin, postLogin, getLogout };
