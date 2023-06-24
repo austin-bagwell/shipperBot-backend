@@ -50,7 +50,6 @@ userSchema.statics.login = async function (username, password) {
 
     if (auth) {
       return user;
-      3;
     }
     throw Error("Incorrect password");
   }
@@ -64,12 +63,4 @@ userSchema.statics.login = async function (username, password) {
 // };
 
 const User = mongoose.model("User", userSchema);
-
-// this isn't gonna work but findByIdAndUpdate might be the right track
-// User.addNewConsignee = async function (consig) {
-//   const id = this._id;
-//   const { name, transitTime } = consignee;
-//   User.findByIdAndUpdate(id, { conignee: consignee });
-// };
-
 export { User };
