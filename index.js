@@ -4,8 +4,8 @@ import cookieParser from "cookie-parser";
 
 import * as dotenv from "dotenv";
 dotenv.config();
-const USER = process.env.USER;
-const DBPASSWORD = process.env.DBPASSWORD;
+const USER = process.env.DBUSER;
+const PASSWORD = process.env.PASSWORD;
 const PORT = process.env.PORT || 3000;
 
 import { authRoutes } from "./routes/authRoutes.js";
@@ -17,7 +17,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-const dbURI = `mongodb+srv://${USER}:${DBPASSWORD}@cluster0.cdcnuye.mongodb.net/shipperBot`;
+const dbURI = `mongodb+srv://${USER}:${PASSWORD}@cluster0.cdcnuye.mongodb.net/shipperBot`;
 
 mongoose
   .connect(dbURI, {
@@ -28,7 +28,7 @@ mongoose
   .catch((err) => console.log(err));
 
 // // added to surpress deprecation warning idk what it does
-mongoose.set("strictQuery", false);
+// mongoose.set("strictQuery", false);
 
 app.get("/", (req, res) => {
   res.send("how do I link this to a React app? TBD");
