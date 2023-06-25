@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { User } from "../models/User.js";
 
-const SECRET = process.env.SECRET;
+const secret = process.env.SECRET;
 
 const requireAuth = (req, res, next) => {
   // first, get token from cookies
@@ -9,7 +9,7 @@ const requireAuth = (req, res, next) => {
 
   // check if token exists and is valid
   if (token) {
-    jwt.verify(token, SECRET, (err, decodedToken) => {
+    jwt.verify(token, secret, (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.redirect("/login");
@@ -27,7 +27,7 @@ const requireAuth = (req, res, next) => {
 const checkUser = (req, res, next) => {
   const token = req.cookies.jwt;
   if (token) {
-    jwt.verify(token, SECRET, async (err, decodedToken) => {
+    jwt.verify(token, secret, async (err, decodedToken) => {
       if (err) {
         console.log(err.message);
         res.locals.user = null;

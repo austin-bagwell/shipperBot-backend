@@ -1,7 +1,7 @@
 import { User } from "../models/User.js";
 import jwt from "jsonwebtoken";
 
-const SECRET = process.env.SECRET;
+const secret = process.env.SECRET;
 
 const handleErrors = (err) => {
   console.log(err.message, err.code);
@@ -30,7 +30,7 @@ const handleErrors = (err) => {
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, SECRET, {
+  return jwt.sign({ id }, secret, {
     expiresIn: maxAge,
   });
 };

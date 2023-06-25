@@ -2,12 +2,9 @@ import express from "express";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
-import * as dotenv from "dotenv";
-dotenv.config();
-const USER = process.env.DBUSER;
-const PASSWORD = process.env.PASSWORD;
-const PORT = process.env.PORT || 3000;
-
+// import dotenv from "dotenv";
+// dotenv.config();
+import "./config.js";
 import { authRoutes } from "./routes/authRoutes.js";
 import { consigneeRoutes } from "./routes/consigneeRoutes.js";
 import { checkUser } from "./middleware/authMiddleware.js";
@@ -16,6 +13,10 @@ const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
+
+const USER = process.env.DBUSER;
+const PASSWORD = process.env.PASSWORD;
+const PORT = process.env.PORT || 3000;
 
 const dbURI = `mongodb+srv://${USER}:${PASSWORD}@cluster0.cdcnuye.mongodb.net/shipperBot`;
 
